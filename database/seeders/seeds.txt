@@ -1,0 +1,299 @@
+// require('dotenv').config();
+
+const sequelize = require('sequelize');
+
+const db = require('../../models/index');
+
+// const env = process.env.NODE_ENV || 'development';
+// const config = require('../../config/config')[env];
+// const connection = {};
+
+// let sequ;
+// if (config.use_env_variable) {
+// 	sequ = new Sequelize(process.env[config.use_env_variable], config);
+// } else {
+// 	sequ = new Sequelize(config.database, config.username, config.password, config);
+// }
+
+// async function testSequ() {
+// 	try {
+// 		await sequ.authenticate();
+// 		console.log('Connection has been established successfully.');
+// 	} catch (error) {
+// 		console.error('Unable to connect to the database:', error);
+// 	}
+// }
+
+// testSequ();
+
+// connection.sequ = sequ;
+// connection.Sequ = Sequ;
+
+const User = require('../../models');
+const Photo = require('../../models');
+const Caption = require('../../models');
+const Vote = require('../../models');
+const Inscription = require('../../models');
+const Category = require('../../models');
+
+// require('../seeders/seeds');
+
+const users = [
+	{
+		id: 1,
+		email: 'user1@email.com',
+		password: '$2b$10$35yMsR0u/Uuklwye2/M3.ONsnK1WIRBTq6iSuzI7MsldK2Ad.1Tcy',
+		first_name: 'user',
+		last_name: 'one',
+		address: '111 street 1',
+		address2: 'some extra address 1',
+		city: 'One',
+		state: 'One',
+		zip_code: '11111',
+		country: 'One country',
+		phone: '111-111-1111',
+		role: 'admin',
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 2,
+		email: 'user2@email.com',
+		password: '$2b$10$35yMsR0u/Uuklwye2/M3.ONsnK1WIRBTq6iSuzI7MsldK2Ad.1Tcy',
+		first_name: 'user',
+		last_name: 'two',
+		address: '222 street 2',
+		address2: 'some extra address 2',
+		city: 'Two',
+		state: 'Two',
+		zip_code: '22222',
+		country: 'Two country',
+		phone: '222-222-2222',
+		role: 'user',
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 3,
+		email: 'user3@email.com',
+		password: '$2b$10$35yMsR0u/Uuklwye2/M3.ONsnK1WIRBTq6iSuzI7MsldK2Ad.1Tcy',
+		first_name: 'user',
+		last_name: 'three',
+		address: '333 avenue 3',
+		address2: '',
+		city: 'Three',
+		state: 'Three',
+		zip_code: '33333',
+		country: 'Three country',
+		phone: '333-333-3333',
+		role: 'user',
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+];
+
+const photos = [
+	{
+		id: 1,
+		title: 'photo 1',
+		category: 'nature',
+		description: 'photo 1 description',
+		url: 'bw001.jpg',
+		user_id: 1,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 2,
+		title: 'photo 2',
+		category: 'buildings',
+		description: 'photo 2 description',
+		url: 'bw002.jpg',
+		user_id: 2,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 3,
+		title: 'photo 3',
+		category: 'nature',
+		description: 'photo 3 description',
+		url: 'bw003.jpg',
+		user_id: 1,
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+];
+
+const captions = [
+	{
+		id: 1,
+		photo_id: 1,
+		user_id: 1,
+		caption: 'caption about photo 1a',
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 2,
+		photo_id: 1,
+		user_id: 2,
+		caption: 'caption about photo 1b',
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 3,
+		photo_id: 1,
+		user_id: 3,
+		caption: 'caption about photo 2',
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 4,
+		photo_id: 3,
+		user_id: 2,
+		caption: 'caption about photo 3',
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+];
+
+const votes = [
+	{
+		id: 1,
+		photo_id: 1,
+		user_id: 1,
+		caption_id: 1,
+		vote: 1,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 2,
+		photo_id: 1,
+		user_id: 2,
+		caption_id: 2,
+		vote: 1,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 3,
+		photo_id: 2,
+		user_id: 3,
+		caption_id: 3,
+		vote: 1,
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+];
+
+const inscriptions = [
+	{
+		id: 1,
+		fee: 20,
+		user_id: 1,
+		photo_id: 1,
+		paid: true,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 2,
+		fee: 20,
+		user_id: 2,
+		photo_id: 2,
+		paid: true,
+		created_at: new Date(),
+		updated_at: new Date()
+	},
+	{
+		id: 3,
+		fee: 20,
+		user_id: 1,
+		photo_id: 3,
+		paid: false,
+		created_at: new Date(),
+		updated_at: new Date()
+	}
+];
+
+const categories = [
+	{ id: 1, category: 'Nature', created_at: new Date(), updated_at: new Date() },
+	{ id: 2, category: 'urban', created_at: new Date(), updated_at: new Date() },
+	{ id: 3, category: 'people', created_at: new Date(), updated_at: new Date() },
+	{ id: 4, category: 'animals', created_at: new Date(), updated_at: new Date() },
+	{ id: 5, category: 'architecture', created_at: new Date(), updated_at: new Date() },
+	{ id: 6, category: 'fashion', created_at: new Date(), updated_at: new Date() },
+	{ id: 7, category: 'food', created_at: new Date(), updated_at: new Date() },
+	{ id: 8, category: 'health', created_at: new Date(), updated_at: new Date() },
+	{ id: 9, category: 'science', created_at: new Date(), updated_at: new Date() },
+	{ id: 10, category: 'technology', created_at: new Date(), updated_at: new Date() },
+	{ id: 11, category: 'travel', created_at: new Date(), updated_at: new Date() },
+	{ id: 12, category: 'sports', created_at: new Date(), updated_at: new Date() },
+	{ id: 13, category: 'transportation', created_at: new Date(), updated_at: new Date() },
+	{ id: 14, category: 'buildings', created_at: new Date(), updated_at: new Date() }
+];
+
+db.sync({ force: false })
+	.then(() => {
+		// Conexión establecida
+		console.log('Conexión establecida...');
+	})
+	.then(() => {
+		// Rellenar usuarios
+		users.forEach(user => User.create(user));
+	})
+	.then(() => {
+		// Rellenar direcciones
+		photos.forEach(photo => Photo.create(photos));
+	})
+	.then(() => {
+		// Rellenar posts
+		captions.forEach(caption => Caption.create(caption));
+	})
+	.then(() => {
+		// Rellenar posts
+		votes.forEach(vote => Vote.create(vote));
+	})
+	.then(() => {
+		// Rellenar posts
+		inscriptions.forEach(inscription => Inscription.create(inscription));
+	})
+	.then(() => {
+		// Rellenar posts
+		categories.forEach(category => Category.create(category));
+	});
+// .then(async () => {
+// 	let band1 = await Band.create(
+// 		{
+// 			name: 'Los abrazafarolas',
+// 			type: 'Rock',
+// 			users: [
+// 				{ name: 'Lucia', age: 18, email: 'lucia@gmail.com' },
+// 				{ name: 'Alberto', age: 22, email: 'alberto@gmail.com' }
+// 			]
+// 		},
+// 		{
+// 			include: 'users'
+// 		}
+// 	);
+
+// 	let user1 = await User.create({ name: 'Sergio', age: 38, email: 'sergio@gmail.com' });
+// 	let user2 = await User.create({ name: 'Monica', age: 44, email: 'monica@gmail.com' });
+
+// 	let band2 = await Band.create({
+// 		name: 'Los Picateclas',
+// 		type: 'Death Metal'
+// 	});
+
+// 	// band2.addUsers([ user1, user2 ]);
+// 	band2.addUser(user1);
+// 	band2.addUser(user2);
+
+// 	// Nuevo usuario
+// 	let user3 = await User.create({ name: 'Paula', age: 16, email: 'paula@gmail.com' });
+// 	user3.setBands([band1, band2]);
+// });

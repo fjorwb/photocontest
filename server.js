@@ -5,6 +5,13 @@ const morgan = require('morgan')
 
 const app = express()
 
+const usersRouter = require('./routes/users')
+
+// Middleware
+
+// Routes
+app.use('/users', usersRouter)
+
 app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('combined'))
