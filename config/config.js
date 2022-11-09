@@ -4,9 +4,9 @@ module.exports = {
 	//Database config
 
 	development: {
-		username: process.env.USERNAME || 'photo_contest',
+		username: process.env.USERNAME || 'postgres',
 		password: process.env.PASSWORD || null,
-		database: process.env.DATABASE || 'photo_contest',
+		database: process.env.DATABASE || 'photocontest',
 		host: process.env.HOST || '127.0.0.1',
 		dialect: process.env.DIALECT || 'postgres',
 		define: {

@@ -9,22 +9,22 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			User.hasMany(models.Photo, {
-				foreignKey: 'user_id',
-				as: 'photos',
-				onDelete: 'CASCADE'
-			}),
-				User.hasMany(models.Inscription, {
-					foreignKey: 'user_id',
-					as: 'fees',
-					onDelete: 'CASCADE'
-				}),
-				User.belongsToMany(models.Role, {
-					as: 'roles',
-					through: 'user_roles',
-					foreignKey: 'user_id',
-					onDelete: 'CASCADE'
-				})
+			// 	User.hasMany(models.Photo, {
+			// 		foreignKey: 'user_id',
+			// 		as: 'photos',
+			// 		onDelete: 'CASCADE'
+			// 	}),
+			// 		User.hasMany(models.Inscription, {
+			// 			foreignKey: 'user_id',
+			// 			as: 'fees',
+			// 			onDelete: 'CASCADE'
+			// 		}),
+			// 		User.belongsToMany(models.Role, {
+			// 			as: 'roles',
+			// 			through: 'user_roles',
+			// 			foreignKey: 'user_id',
+			// 			onDelete: 'CASCADE'
+			// 		})
 		}
 	}
 	User.init(
@@ -66,11 +66,14 @@ module.exports = (sequelize, DataTypes) => {
 			zip_code: DataTypes.STRING,
 			country: DataTypes.STRING,
 			phone: DataTypes.STRING,
-			role: DataTypes.STRING
+			role: DataTypes.STRING,
+			created_at: DataTypes.DATE,
+			updated_at: DataTypes.DATE
 		},
 		{
 			sequelize,
-			modelName: 'User'
+			modelName: 'User',
+			tableName: 'users'
 		}
 	)
 	return User
